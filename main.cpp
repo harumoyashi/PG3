@@ -1,23 +1,32 @@
 #include <stdio.h>
 
-int CamatuMoney(int n,int result = 100)
+int CamatuMoney(int money, int h)
 {
-	if (n < 1)
+	if (h <= 0)
 	{
-		return result;
+		return 0;
 	}
-	result * 2 - 50;
 
-	return CamatuMoney(n - 1);
+	return money + CamatuMoney(money * 2 - 50, h - 1);
 }
 
 int main()
 {
-	int n = 3;
+	int n = 8;
 	int result = 0;
 
-	result += CamatuMoney(n);
-	printf("%d", result);
+	printf("ˆê”Ê“I‚È’À‹à‘ÌŒn:%d‰~\n", 1072 * n);
+	printf("Ä‹A“I‚È’À‹à‘ÌŒn:%d‰~\n", CamatuMoney(100, n));
+
+
+	if (1072 * n >= CamatuMoney(100, n))
+	{
+		printf("ˆê”Ê“I‚È’À‹à‘ÌŒn‚Ì•û‚ª’À‹à‚ª‘½‚­‚È‚é\n");
+	}
+	else
+	{
+		printf("Ä‹A“I‚È’À‹à‘ÌŒn‚Ì•û‚ª’À‹à‚ª‘½‚­‚È‚é\n");
+	}
 
 	return (0);
 }
