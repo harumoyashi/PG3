@@ -4,7 +4,10 @@ template<typename T>
 //¬‚³‚¢‚Ù‚¤‚Ì’l‚ğ•Ô‚·
 T Min(T a, T b)
 {
-	if (a <= b)return static_cast<T>(a);
+	if (a <= b)
+	{
+		return static_cast<T>(a);
+	}
 	return static_cast<T>(b);
 }
 
