@@ -23,4 +23,6 @@ int main(void)
 	printf("%f\n", Min<float>(1.5f, 2.5f));
 	printf("%lf\n", Min<double>(1.5l, 2.5l));
 	printf("%c\n", Min<char>(1, 2));
+
+	return (0);
 }
