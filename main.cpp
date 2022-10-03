@@ -1,14 +1,14 @@
 #include <stdio.h>
 
-int CamatuMoney(int n,int result = 0)
+int CamatuMoney(int n,int result = 100)
 {
-	if (n <= 1)
+	if (n < 1)
 	{
-		result += 100;
 		return result;
 	}
-	
-	return (CamatuMoney(n - 1) * 2 - 50);
+	result * 2 - 50;
+
+	return CamatuMoney(n - 1);
 }
 
 int main()
