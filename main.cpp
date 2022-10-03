@@ -18,5 +18,11 @@ int CamatuMoney(int n)
 
 int main()
 {
+	int n = 5;
+	int result;
 
+	result = CamatuMoney(n);
+	printf("%d", result);
+
+	return (0);
 }
