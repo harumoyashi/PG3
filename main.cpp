@@ -8,9 +8,9 @@ typedef void (*PFunc)(int);
 void callback(int num)
 {
 	srand(time(nullptr));
-	int random = rand();
+	int random = rand() % 6 + 1;
 
-	printf("ランダムで出た値は%dでした\n", random);
+	printf("さいころの出目は%dでした\n", random);
 
 	//判定
 	if (random % 2 == num % 2)
@@ -39,7 +39,7 @@ int main()
 	p = callback;
 
 
-	printf("「奇数」なら「1」を「偶数」なら「2」を入力してください\n");
+	printf("「半」なら「1」を「丁」なら「2」を入力してください\n");
 	scanf_s("%d", &num);
 
 	if (num == 1 || num == 2)
