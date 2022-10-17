@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <Windows.h>
 #include <time.h>
+#include <functional>
 
 typedef void (*PFunc)(int*);
 
@@ -22,33 +23,48 @@ int main()
 	srand(time(nullptr));
 	int random = rand();
 
-	int num = 0;
+	char string[5];
 
-	printf("「偶数」なら0を「奇数」なら1を入力してください\n");
+	printf("「偶数」か「奇数」を入力してください\n");
 
-	scanf_s("%d", &num);
-	printf("待機中\n");
+	scanf_s("%s", string, 5);
+	printf("結果は...\n");
 
 	PFunc p;
 	p = callback;
 	setTimeout(p, 3);
 
+	printf("ランダムで出た値は%dでした\n", random);
+
 	//偶数の場合
-	if (num == 0)
+	if (strcmp(string, "偶数") == 0)
 	{
-		printf("%d", random / 2 * 2);
+		if (random % 2 == 0)
+		{
+			printf("当たり！");
+		}
+		else
+		{
+			printf("はずれ...");
+		}
 	}
 	//奇数の場合
-	else if (num == 1)
+	else if (strcmp(string, "奇数") == 0)
 	{
-		printf("%d", random / 2 * 2 - 1);
+		if (random % 2 == 1)
+		{
+			printf("当たり！");
+		}
+		else
+		{
+			printf("はずれ...");
+		}
 	}
 	//馬鹿用
 	else
 	{
 		printf("その文字の入力は受け付けてないよ");
 	}
-
 
 	return (0);
 }
