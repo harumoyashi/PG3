@@ -5,7 +5,7 @@
 
 typedef void (*PFunc)(int);
 
-void lottery(int num)
+void Lottery(int num)
 {
 	srand(time(nullptr));
 	int random = rand() % 6 + 1;
@@ -36,7 +36,7 @@ int main()
 {
 	PFunc p;
 	int num = 0;
-	p = lottery;
+	p = Lottery;
 
 
 	printf("「半」なら「1」を「丁」なら「2」を入力してください\n");
