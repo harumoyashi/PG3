@@ -13,14 +13,7 @@ void lottery(int num)
 	printf("‚³‚¢‚±‚ë‚Ìo–Ú‚Í%d‚Å‚µ‚½\n", random);
 
 	//”»’è
-	if (random % 2 == num % 2)
-	{
-		printf("“–‚½‚èI");
-	}
-	else
-	{
-		printf("‚Í‚¸‚ê...");
-	}
+	random % 2 == num % 2 ? printf("“–‚½‚èI") : printf("‚Í‚¸‚ê...");
 }
 
 int main()
