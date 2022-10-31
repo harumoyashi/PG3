@@ -23,28 +23,26 @@ void lottery(int num)
 	}
 }
 
-//コールバック関数
-void setTimeout(PFunc p, int sec, int num)
-{
-	printf("結果は...\n");
-	//コールバック関数呼び出す
-	Sleep(sec *= 1000);
-	p(num);
-}
-
 int main()
 {
 	PFunc p;
-	int num = 0;
 	p = lottery;
-
+	int num = 0;
 
 	printf("「半」なら「1」を「丁」なら「2」を入力してください\n");
 	scanf_s("%d", &num);
 
+	std::function<void(PFunc, int)>setTimeout = [=](PFunc p, int sec)
+	{
+		printf("結果は...\n");
+		//コールバック関数呼び出す
+		Sleep(sec *= 1000);
+		p(num);
+	};
+
 	if (num == 1 || num == 2)
 	{
-		setTimeout(p, 3, num);
+		setTimeout(p, 3);
 	}
 	else
 	{
