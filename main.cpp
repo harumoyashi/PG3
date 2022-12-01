@@ -5,30 +5,42 @@
 typedef struct cell
 {
 	char name[8];
+	struct cell* prev;
 	struct cell* next;
 }CELL;
 
 //ƒf[ƒ^‚Ì‘}“ü
-void Insert(CELL* endCell, const char* buf);
+void Insert(CELL* currentCell, const char* buf);
 //—v‘fˆê——•\Ž¦
 int Index(CELL* endCell);
 //ƒŠƒXƒg‚ÌÅŒã”ö‚ðíœ
-void Delete(CELL* endCell);
+void Delete(CELL* deleteCell);
+//•ÒW
+void Edit(CELL* editCell);
+//”CˆÓ‚ÌˆÊ’u‚Ü‚ÅƒAƒhƒŒƒX‚ð‚½‚Ç‚é
+CELL* GetInsertCellAddress(CELL* endCell, int iterator);
 
 int sceneNum = 0;
+int eleSceneNum = 0;
 
 int main()
 {
+	int iterator = 0;
 	char name[8];
+	CELL* insertCell;
+
+	int eleNum = 0;
 
 	CELL head;
+	head.prev = nullptr;	//‰Šú‰»“I‚È‚±‚Æ‚ð‚µ‚Ä‚ ‚°‚È‚¢‚ÆƒSƒ~‚ª“ü‚Á‚¿‚á‚¤
 	head.next = nullptr;	//‰Šú‰»“I‚È‚±‚Æ‚ð‚µ‚Ä‚ ‚°‚È‚¢‚ÆƒSƒ~‚ª“ü‚Á‚¿‚á‚¤
 
 	while (true)
 	{
+		//‰Šú‰æ–Ê
 		if (sceneNum == 0)
 		{
-			printf("[—v‘f‚Ì‘€ì]\n1.—v‘f‚Ìˆê——•\Ž¦\n2.ÅŒã”ö‚É—v‘f‚Ì‘}“ü\n3.ÅŒã”ö‚Ì—v‘f‚Ìíœ\n\n");
+			printf("[—v‘f‚Ì‘€ì]\n1.—v‘f‚Ìˆê——•\Ž¦\n2.ÅŒã”ö‚É—v‘f‚Ì‘}“ü\n3.—v‘f‚Ì•ÒW\n4.ÅŒã”ö‚Ì—v‘f‚Ìíœ\n\n");
 			printf("---------------------\n‘€ì‚ð‘I‘ð‚µ‚Ä‚­‚¾‚³‚¢\n");
 
 			//ƒV[ƒ“Ø‚è‘Ö‚¦
@@ -36,7 +48,9 @@ int main()
 			{
 				int num;
 				scanf_s("%d", &num);
-				if (num >= 1 && num <= 3)
+				scanf_s("%*[^\n]%*c");
+
+				if (num >= 1 && num <= 4)
 				{
 					sceneNum = num;
 					break;
@@ -47,42 +61,151 @@ int main()
 				}
 			}
 		}
+		//—v‘fˆê——
 		else if (sceneNum == 1)
 		{
-			printf("[—v‘f‚Ìˆê——•\Ž¦]\n—v‘fˆê——:\n");
-
-			int eleNum = 0;
-			eleNum = Index(&head);
-
-			printf("—v‘f”:%d\n\n", eleNum);
+			printf("[—v‘f‚Ì•\Ž¦]\n1.—v‘f‚Ìˆê——•\Ž¦\n2.‡”Ô‚ðŽw’è‚µ‚Ä—v‘f‚ð•\Ž¦\n3.‰Šú‰æ–Ê‚É–ß‚é\n\n");
+			printf("---------------------\n‘€ì‚ð‘I‘ð‚µ‚Ä‚­‚¾‚³‚¢\n");
 
 			//ƒV[ƒ“Ø‚è‘Ö‚¦
-			printf("---------------------\n0.‰Šú‰æ–Ê‚É–ß‚é\n");
 			while (true)
 			{
 				int num;
 				scanf_s("%d", &num);
-
-				if (num == 0)
+				scanf_s("%*[^\n]%*c");
+				if (num >= 1 && num <= 3)
 				{
-					sceneNum = num;
+					eleSceneNum = num;
 					break;
 				}
 				else
 				{
-					printf("0‚Á‚ÄŒ¾‚Á‚Ä‚ñ‚¾‚ë\n");
+					printf("‚»‚ñ‚È‘€ì‚Ë‚¦‚æ\n");
+				}
+			}
+
+			if (eleSceneNum == 1)
+			{
+				printf("[—v‘f‚Ìˆê——•\Ž¦]\n—v‘fˆê——:\n");
+
+				eleNum = Index(&head);
+
+				if (head.next == nullptr)
+				{
+					printf("‘¶Ý‚µ‚Ü‚¹‚ñ\n");
+				}
+
+				printf("—v‘f”:%d\n\n", eleNum);
+
+				printf("---------------------\n1.[—v‘f‚Ì•\Ž¦]‚É–ß‚é\n2.‰Šú‰æ–Ê‚É–ß‚é\n");
+
+				int num;
+				scanf_s("%d", &num);
+				scanf_s("%*[^\n]%*c");
+
+				if (num == 1)
+				{
+					sceneNum = 1;
+				}
+				else if (num == 2)
+				{
+					sceneNum = 0;
+				}
+				else
+				{
+					printf("‚»‚ñ‚È‘€ì‚Ë‚¦‚æ\n");
+				}
+			}
+			if (eleSceneNum == 2)
+			{
+				printf("[‡”Ô‚ðŽw’è‚µ‚Ä—v‘f‚ð•\Ž¦]\n•\Ž¦‚µ‚½‚¢—v‘f‚Ì‡”Ô‚ðŽw’è‚µ‚Ä‚­‚¾‚³‚¢\n");
+
+				scanf_s("%d", &iterator);
+				scanf_s("%*[^\n]%*c");
+
+				insertCell = GetInsertCellAddress(&head, iterator);
+				if (insertCell->next != nullptr)
+				{
+					printf("%d”Ô–Ú‚Ì—v‘f‚Í%s‚Å‚·\n", iterator, insertCell->name);
+				}
+				else
+				{
+					printf("‘¶Ý‚µ‚Ü‚¹‚ñ\n");
+				}
+
+				printf("---------------------\n1.[—v‘f‚Ì•\Ž¦]‚É–ß‚é\n2.‰Šú‰æ–Ê‚É–ß‚é\n");
+
+				int num;
+				scanf_s("%d", &num);
+				scanf_s("%*[^\n]%*c");
+
+				if (num == 1)
+				{
+					sceneNum = 1;
+				}
+				else if (num == 2)
+				{
+					sceneNum = 0;
+				}
+				else
+				{
+					printf("‚»‚ñ‚È‘€ì‚Ë‚¦‚æ\n");
+				}
+			}
+			if (eleSceneNum == 3)
+			{
+				sceneNum = 0;
+			}
+
+			//ƒV[ƒ“Ø‚è‘Ö‚¦
+			while (sceneNum != 1)
+			{
+				if (sceneNum == 0)
+				{
+					break;
+				}
+				else
+				{
+					printf("---------------------\n0.‰Šú‰æ–Ê‚É–ß‚é\n");
+					int num;
+					scanf_s("%d", &num);
+					scanf_s("%*[^\n]%*c");
+
+					if (num == 0)
+					{
+						sceneNum = num;
+						break;
+					}
+					else
+					{
+						printf("0‚Á‚ÄŒ¾‚Á‚Ä‚ñ‚¾‚ë\n");
+					}
 				}
 			}
 		}
+		//‘}“ü
 		else if (sceneNum == 2)
 		{
-			printf("[ƒŠƒXƒg—v‘f‚Ì‘}“ü]\n’Ç‰Á‚·‚é—v‘f‚Ì’l‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
+			printf("[ƒŠƒXƒg—v‘f‚Ì‘}“ü]\n’Ç‰Á‚·‚é—v‘f”‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
 
 			while (true)
 			{
+				scanf_s("%d", &iterator);
+				scanf_s("%*[^\n]%*c");
+
+				insertCell = GetInsertCellAddress(&head, iterator);
+
+				break;
+			}
+
+			while (true)
+			{
+				printf("[ƒŠƒXƒg—v‘f‚Ì‘}“ü]\n’Ç‰Á‚·‚é—v‘f‚Ì“à—e‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
+
 				scanf_s("%s", name, 8);
 
-				Insert(&head, name);
+				Insert(insertCell, name);
+				printf("%s‚ª%d”Ô–Ú‚É’Ç‰Á‚³‚ê‚Ü‚µ‚½\n", insertCell->next->name, iterator);
 				break;
 			}
 
@@ -92,6 +215,7 @@ int main()
 			{
 				int num;
 				scanf_s("%d", &num);
+				scanf_s("%*[^\n]%*c");
 
 				if (num == 0)
 				{
@@ -104,26 +228,99 @@ int main()
 				}
 			}
 		}
+		//•ÒW
 		else if (sceneNum == 3)
 		{
-			printf("[—v‘f‚Ìíœ]\n\n");
-			Delete(&head);
+			printf("[—v‘f‚Ì•ÒW]\n•ÒW‚µ‚½‚¢—v‘f‚Ì”Ô†‚ðŽw’è‚µ‚Ä‚­‚¾‚³‚¢\n");
+
+			scanf_s("%d", &iterator);
+			scanf_s("%*[^\n]%*c");
+
+			insertCell = GetInsertCellAddress(&head, iterator);
+			if (insertCell->next != nullptr)
+			{
+				Edit(insertCell);
+				printf("%d”Ô–Ú‚Ì—v‘f‚ª%s‚É•ÏX‚³‚ê‚Ü‚µ‚½\n", iterator, insertCell->next->name);
+			}
+			else
+			{
+				printf("%d”Ô–Ú‚Ì—v‘f‚Í‘¶Ý‚µ‚Ü‚¹‚ñ\n", iterator);
+				sceneNum = 0;
+			}
 
 			//ƒV[ƒ“Ø‚è‘Ö‚¦
-			printf("---------------------\n0.‰Šú‰æ–Ê‚É–ß‚é\n");
 			while (true)
 			{
-				int num;
-				scanf_s("%d", &num);
-
-				if (num == 0)
+				if (sceneNum == 0)
 				{
-					sceneNum = num;
+					printf("•ÒW‚·‚é‚à‚Ì‚È‚¢‚©‚ç‰Šú‰æ–Ê–ß‚é‚æ\n");
 					break;
 				}
 				else
 				{
-					printf("0‚Á‚ÄŒ¾‚Á‚Ä‚ñ‚¾‚ë\n");
+					printf("---------------------\n0.‰Šú‰æ–Ê‚É–ß‚é\n");
+					int num;
+					scanf_s("%d", &num);
+					scanf_s("%*[^\n]%*c");
+
+					if (num == 0)
+					{
+						sceneNum = num;
+						break;
+					}
+					else
+					{
+						printf("0‚Á‚ÄŒ¾‚Á‚Ä‚ñ‚¾‚ë\n");
+					}
+				}
+			}
+		}
+		//íœ
+		else if (sceneNum == 4)
+		{
+			//‰½‚à“ü‚Á‚Ä‚È‚©‚Á‚½‚ç–ß‚·
+
+			printf("[—v‘f‚Ìíœ]\níœ‚µ‚½‚¢—v‘f‚Ì”Ô†‚ðŽw’è‚µ‚Ä‚­‚¾‚³‚¢\n");
+
+			scanf_s("%d", &iterator);
+			scanf_s("%*[^\n]%*c");
+
+			insertCell = GetInsertCellAddress(&head, iterator);
+			if (insertCell->next != nullptr)
+			{
+				Delete(insertCell);
+				printf("%d”Ô–Ú‚Ì—v‘f‚ð%síœ‚µ‚Ü‚µ‚½\n", iterator, insertCell->name);
+			}
+			else
+			{
+				printf("%d”Ô–Ú‚Ì—v‘f‚Í‘¶Ý‚µ‚Ü‚¹‚ñ\n", iterator);
+				sceneNum = 0;
+			}
+
+			//ƒV[ƒ“Ø‚è‘Ö‚¦
+			while (true)
+			{
+				if (sceneNum == 0)
+				{
+					printf("íœ‚·‚é‚à‚Ì‚È‚¢‚©‚ç‰Šú‰æ–Ê–ß‚é‚æ\n");
+					break;
+				}
+				else
+				{
+					printf("---------------------\n0.‰Šú‰æ–Ê‚É–ß‚é\n");
+					int num;
+					scanf_s("%d", &num);
+					scanf_s("%*[^\n]%*c");
+
+					if (num == 0)
+					{
+						sceneNum = num;
+						break;
+					}
+					else
+					{
+						printf("0‚Á‚ÄŒ¾‚Á‚Ä‚ñ‚¾‚ë\n");
+					}
 				}
 			}
 		}
@@ -132,7 +329,7 @@ int main()
 	return (0);
 }
 
-void Insert(CELL* endCell, const char* buf)
+void Insert(CELL* currentCell, const char* buf)
 {
 	//V‹K‚ÉƒZƒ‹‚ðì¬//
 	CELL* cell;
@@ -140,18 +337,17 @@ void Insert(CELL* endCell, const char* buf)
 	cell = (CELL*)malloc(sizeof(CELL));
 
 	strcpy_s(cell->name, 8, buf);
-	cell->next = nullptr;
-	printf("%s‚ªÅŒã”ö‚É’Ç‰Á‚³‚ê‚Ü‚µ‚½\n", cell->name);
+	cell->prev = currentCell;
+	cell->next = currentCell->next;
 
-	//’Ç‰Á‚·‚é‘O‚ÌÅŒã”ö‚ðŒŸõ//
-	//ÅV‚ÌƒZƒ‹‚ÌƒAƒhƒŒƒX‚Ìˆê‚Â–Ú‚Ìˆ—‚Íˆø”‚©‚çŽ‚Á‚Ä‚«‚½ƒŠƒXƒg‚Ì‚¤‚¿Å‰‚ÌƒZƒ‹‚ÌƒAƒhƒŒƒX‚ªŠY“–‚·‚é
-	while (endCell->next != nullptr)
+	if (currentCell->next)
 	{
-		endCell = endCell->next;
+		CELL* nextCell = currentCell->next;
+		nextCell->prev = cell;
 	}
 
 	//’Ç‰Á‚·‚é‘O‚ÌÅŒã”ö‚ÉV‹KƒZƒ‹‚Ìƒ|ƒCƒ“ƒ^‚ð‘ã“ü//
-	endCell->next = cell;
+	currentCell->next = cell;
 }
 
 int Index(CELL* endCell)
@@ -161,7 +357,7 @@ int Index(CELL* endCell)
 	while (endCell->next != nullptr)
 	{
 		endCell = endCell->next;
-		printf("%s\n", endCell->name);
+		printf("%d:%s\n", eleNum, endCell->name);
 
 		eleNum++;
 	}
@@ -170,10 +366,34 @@ int Index(CELL* endCell)
 
 void Delete(CELL* endCell)
 {
+	//ÅŒã”öíœ
 	while (endCell->next->next != nullptr)
 	{
 		endCell = endCell->next;
 	}
 	endCell->next = nullptr;
-	printf("ÅŒã”ö‚Ì—v‘f‚ðíœ‚µ‚Ü‚µ‚½");
+}
+
+void Edit(CELL* editCell)
+{
+	char name[8];
+	scanf_s("%s", name, 8);
+
+	strcpy_s(editCell->next->name, 8, name);
+}
+
+CELL* GetInsertCellAddress(CELL* endCell, int iterator)
+{
+	for (int i = 0; i < iterator; i++)
+	{
+		if (endCell->next)
+		{
+			endCell = endCell->next;
+		}
+		else
+		{
+			break;
+		}
+	}
+	return endCell;
 }
