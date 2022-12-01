@@ -11,7 +11,7 @@ typedef struct cell
 //データの挿入
 void Insert(CELL* endCell, const char* buf);
 //要素一覧表示
-void Index(CELL* endCell,int eleNum);
+int Index(CELL* endCell);
 //リストの最後尾を削除
 void Delete(CELL* endCell);
 
@@ -52,7 +52,7 @@ int main()
 			printf("[要素の一覧表示]\n要素一覧:\n");
 
 			int eleNum = 0;
-			Index(&head, eleNum);
+			eleNum = Index(&head);
 
 			printf("要素数:%d\n\n", eleNum);
 
@@ -154,8 +154,9 @@ void Insert(CELL* endCell, const char* buf)
 	endCell->next = cell;
 }
 
-void Index(CELL* endCell, int eleNum)
+int Index(CELL* endCell)
 {
+	int eleNum = 0;
 	//nextに何かが入ってる限り出力//
 	while (endCell->next != nullptr)
 	{
@@ -164,6 +165,7 @@ void Index(CELL* endCell, int eleNum)
 
 		eleNum++;
 	}
+	return eleNum;
 }
 
 void Delete(CELL* endCell)
