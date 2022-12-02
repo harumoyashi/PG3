@@ -15,7 +15,7 @@ void PushBack(CELL* currentCell, const char* buf);
 //要素一覧表示
 int Index(CELL* endCell);
 //リストの最後尾を削除
-void Delete(CELL* deleteCell);
+void Delete(CELL* deleteCell, int iterator);
 //編集
 void Edit(CELL* editCell);
 //任意の位置までアドレスをたどる
@@ -190,7 +190,7 @@ int main()
 		{
 			while (true)
 			{
-				printf("0.最後尾に追加する\n1.要素番号を指定して追加する\n");
+				printf("[リスト要素の挿入]\n0.最後尾に追加する\n1.要素番号を指定して追加する\n");
 
 				int num;
 
@@ -199,6 +199,7 @@ int main()
 
 				if (num == 0)
 				{
+					printf("追加する要素の内容を入力してください\n");
 					scanf_s("%s", name, 8);
 					PushBack(&head, name);
 					addSceneNum = 1;
@@ -217,7 +218,7 @@ int main()
 
 			while (addSceneNum == 0)
 			{
-				printf("[リスト要素の挿入]\n追加する要素数を入力してください\n");
+				printf("追加する要素数を入力してください\n");
 
 				scanf_s("%d", &iterator);
 				scanf_s("%*[^\n]%*c");
@@ -229,7 +230,7 @@ int main()
 
 			while (addSceneNum == 0)
 			{
-				printf("[リスト要素の挿入]\n追加する要素の内容を入力してください\n");
+				printf("追加する要素の内容を入力してください\n");
 
 				scanf_s("%s", name, 8);
 
@@ -307,24 +308,17 @@ int main()
 		//削除
 		else if (sceneNum == 4)
 		{
-			printf("[要素の削除]\n最後尾の要素を削除しました\n");
 			//何も入ってなかったら戻す
-			//printf("[要素の削除]\n削除したい要素の番号を指定してください\n");
+			printf("[要素の削除]\n削除したい要素の番号を指定してください\n");
 
-			/*scanf_s("%d", &iterator);
+			scanf_s("%d", &iterator);
 			scanf_s("%*[^\n]%*c");
 
-			insertCell = GetInsertCellAddress(&head, iterator);
-			if (insertCell->next != nullptr)
-			{
-				Delete(insertCell);
-				printf("%d番目の要素を%s削除しました\n", iterator, insertCell->name);
-			}
-			else
-			{
-				printf("%d番目の要素は存在しません\n", iterator);
-				sceneNum = 0;
-			}*/
+
+			Delete(&head, iterator);
+
+			/*printf("%d番目の要素は存在しません\n", iterator);
+			sceneNum = 0;*/
 
 			//シーン切り替え
 			while (true)
@@ -417,14 +411,29 @@ int Index(CELL* endCell)
 	return eleNum;
 }
 
-void Delete(CELL* endCell)
+void Delete(CELL* deleteCell, int iterator)
 {
-	//最後尾削除
-	while (endCell->next->next != nullptr)
+	//指定された要素まで進める
+	for (int i = 0; i <= iterator; i++)
 	{
-		endCell = endCell->next;
+		deleteCell = deleteCell->next;
+		if (deleteCell->next == nullptr)
+		{
+			printf("最後尾の要素%sを削除しました\n", deleteCell->prev->next->name);
+			deleteCell->prev->next = nullptr;
+			break;
+		}
 	}
-	endCell->next = nullptr;
+
+	//最後尾過ぎてたら最後尾削除
+	//最後尾以外なら指定された要素を削除
+	if (deleteCell->prev->next != nullptr)
+	{
+		printf("%d番目の要素を%s削除しました\n", iterator, deleteCell->name);
+		deleteCell->prev->next = deleteCell->next;
+		deleteCell->next->prev = deleteCell->prev;
+	}
+
 }
 
 void Edit(CELL* editCell)
