@@ -23,12 +23,13 @@ CELL* GetInsertCellAddress(CELL* endCell, int iterator);
 
 int sceneNum = 0;
 int eleSceneNum = 0;
+int addSceneNum = 0;
 
 int main()
 {
 	int iterator = 0;
 	char name[8];
-	CELL* insertCell;
+	CELL* insertCell{};
 
 	int eleNum = 0;
 
@@ -41,7 +42,7 @@ int main()
 		//初期画面
 		if (sceneNum == 0)
 		{
-			printf("[要素の操作]\n1.要素の一覧表示\n2.最後尾に要素の挿入\n3.要素の編集\n4.最後尾の要素の削除\n\n");
+			printf("[要素の操作]\n1.要素の一覧表示\n2.要素の挿入\n3.要素の編集\n4.最後尾の要素の削除\n\n");
 			printf("---------------------\n操作を選択してください\n");
 
 			//シーン切り替え
@@ -187,10 +188,37 @@ int main()
 		//挿入
 		else if (sceneNum == 2)
 		{
-			printf("[リスト要素の挿入]\n追加する要素数を入力してください\n");
-
 			while (true)
 			{
+				printf("0.最後尾に追加する\n1.要素番号を指定して追加する\n");
+
+				int num;
+
+				scanf_s("%d", &num);
+				scanf_s("%*[^\n]%*c");
+
+				if (num == 0)
+				{
+					scanf_s("%s", name, 8);
+					PushBack(&head, name);
+					addSceneNum = 1;
+					break;
+				}
+				else if (num == 1)
+				{
+					addSceneNum = 0;
+					break;
+				}
+				else
+				{
+					printf("そんな操作ねえよ\n");
+				}
+			}
+
+			while (addSceneNum == 0)
+			{
+				printf("[リスト要素の挿入]\n追加する要素数を入力してください\n");
+
 				scanf_s("%d", &iterator);
 				scanf_s("%*[^\n]%*c");
 
@@ -199,7 +227,7 @@ int main()
 				break;
 			}
 
-			while (true)
+			while (addSceneNum == 0)
 			{
 				printf("[リスト要素の挿入]\n追加する要素の内容を入力してください\n");
 
