@@ -11,6 +11,7 @@ typedef struct cell
 
 //データの挿入
 void Insert(CELL* currentCell, const char* buf);
+void PushBack(CELL* currentCell, const char* buf);
 //要素一覧表示
 int Index(CELL* endCell);
 //リストの最後尾を削除
@@ -278,11 +279,11 @@ int main()
 		//削除
 		else if (sceneNum == 4)
 		{
+			printf("[要素の削除]\n最後尾の要素を削除しました\n");
 			//何も入ってなかったら戻す
+			//printf("[要素の削除]\n削除したい要素の番号を指定してください\n");
 
-			printf("[要素の削除]\n削除したい要素の番号を指定してください\n");
-
-			scanf_s("%d", &iterator);
+			/*scanf_s("%d", &iterator);
 			scanf_s("%*[^\n]%*c");
 
 			insertCell = GetInsertCellAddress(&head, iterator);
@@ -295,7 +296,7 @@ int main()
 			{
 				printf("%d番目の要素は存在しません\n", iterator);
 				sceneNum = 0;
-			}
+			}*/
 
 			//シーン切り替え
 			while (true)
@@ -348,6 +349,30 @@ void Insert(CELL* currentCell, const char* buf)
 
 	//追加する前の最後尾に新規セルのポインタを代入//
 	currentCell->next = cell;
+	cell->prev = currentCell;
+}
+
+void PushBack(CELL* currentCell, const char* buf)
+{
+	//新規にセルを作成//
+	CELL* cell;
+	//新規作成するセル分のメモリを確保する
+	cell = (CELL*)malloc(sizeof(CELL));
+
+	strcpy_s(cell->name, 8, buf);
+	cell->next = nullptr;
+	printf("%sが最後尾に追加されました\n", cell->name);
+
+	//追加する前の最後尾を検索//
+	//最新のセルのアドレスの一つ目の処理は引数から持ってきたリストのうち最初のセルのアドレスが該当する
+	while (currentCell->next != nullptr)
+	{
+		currentCell = currentCell->next;
+	}
+
+	//追加する前の最後尾に新規セルのポインタを代入//
+	currentCell->next = cell;
+	cell->prev = currentCell;
 }
 
 int Index(CELL* endCell)
@@ -379,6 +404,7 @@ void Edit(CELL* editCell)
 	char name[8];
 	scanf_s("%s", name, 8);
 
+	//name[8] = 0;
 	strcpy_s(editCell->next->name, 8, name);
 }
 
