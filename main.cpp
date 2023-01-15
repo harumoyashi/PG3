@@ -1,7 +1,7 @@
 #include "DxLib.h"
 
 // ウィンドウのタイトルに表示する文字列
-const char TITLE[] = "xx2x_xx_ナマエ: タイトル";
+const char TITLE[] = "LE2A_01_アイカワ_ハルヒコ";
 
 // ウィンドウ横幅
 const int WIN_WIDTH = 600;
