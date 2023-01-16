@@ -1,4 +1,5 @@
 #include "DxLib.h"
+#include "SceneManager.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "LE2A_01_アイカワ_ハルヒコ";
@@ -40,16 +41,24 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 	// ゲームループで使う変数の宣言
+	SceneManager* sceneManager = SceneManager::GetInstance();
 
+	int backGroundColor = 0xffffff;
+
+	const char* nowSceneName = "a";
+	const char* nextSceneName = "a";
 
 	// 最新のキーボード情報用
-	char keys[256] = {0};
+	char keys[256] = { 0 };
 
 	// 1ループ(フレーム)前のキーボード情報
-	char oldkeys[256] = {0};
+	char prev[256] = { 0 };
 
 	// ゲームループ
 	while (true) {
+		for (int i = 0; i < 256; i++) {
+			prev[i] = keys[i];
+		}
 		// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
 		// 最新のキーボード情報を取得
 		GetHitKeyStateAll(keys);
@@ -58,10 +67,55 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ClearDrawScreen();
 		//---------  ここからプログラムを記述  ----------//
 
+		int nextScene = sceneManager->GetSceneNum() + 1;
+
 		// 更新処理
 
+		if (keys[KEY_INPUT_SPACE] == 1 && prev[KEY_INPUT_SPACE] == 0)
+		{
+			sceneManager->ChangeScene(nextScene);
+		}
+
+		if (sceneManager->GetSceneNum() == SceneNum::Title)
+		{
+			backGroundColor = 0xAA5050;
+
+			nowSceneName = "TitleScene";
+			nextSceneName = "NewGameScene";
+		}
+		else if (sceneManager->GetSceneNum() == SceneNum::NewGame)
+		{
+			backGroundColor = 0x50AA50;
+
+			nowSceneName = "NewGameScene";
+			nextSceneName = "GamePlayScene";
+		}
+		else if (sceneManager->GetSceneNum() == SceneNum::GamePlay)
+		{
+			backGroundColor = 0x5050AA;
+
+			nowSceneName = "GamePlayScene";
+			nextSceneName = "GameClearScene";
+		}
+		else if (sceneManager->GetSceneNum() == SceneNum::GameClear)
+		{
+			backGroundColor = 0x505050;
+
+			nowSceneName = "GameClearScene";
+			nextSceneName = "TitleScene";
+		}
 
 		// 描画処理
+
+		// 背景描画
+		DrawBox(0, 0, WIN_WIDTH, WIN_HEIGHT, backGroundColor, true);
+
+		// 文字描画
+		DrawFormatString(0, 0, 0xffffff, "NowScene  : %s", nowSceneName);
+		DrawFormatString(0, 20, 0xffffff, "NextScene : %s", nextSceneName);
+		DrawFormatString(200, 150, 0xffffff, "SceneNum : %d", sceneManager->GetSceneNum());
+		DrawFormatString(200, 200, 0xffffff, "Press SPACE");
+
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
@@ -76,7 +130,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 
 		// ESCキーが押されたらループから抜ける
-		if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) {
+		if (CheckHitKey(KEY_INPUT_F5) == 1) {
 			break;
 		}
 	}
