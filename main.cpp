@@ -45,8 +45,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	int backGroundColor = 0xffffff;
 
-	const char* nowSceneName = "a";
-	const char* nextSceneName = "a";
+	const char* nowSceneName = "";
+	const char* nextSceneName = "";
 
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };
