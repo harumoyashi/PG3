@@ -43,6 +43,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Enemy* enemys;
 	const int maxEnemy = 10;
 	enemys = new Enemy[maxEnemy];
+	enemys->Init();
 
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };
@@ -75,7 +76,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			}
 		}
 
+		enemys->Update();
+
 		// 描画処理
+		enemys->Draw();
 
 		// 背景描画
 
