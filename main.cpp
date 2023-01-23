@@ -103,7 +103,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			break;
 		}
 	}
-	delete enemys;
+	delete[] enemys;
 
 	// Dxƒ‰ƒCƒuƒ‰ƒŠI—¹ˆ—
 	DxLib_End();
