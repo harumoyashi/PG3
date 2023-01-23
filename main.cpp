@@ -86,7 +86,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			DrawFormatString(0, i * 20, 0xffffff, "enemy[%d]:isAlive = %d", i, enemys[i].GetIsAlive());
 		}
 
-
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
 		ScreenFlip();
