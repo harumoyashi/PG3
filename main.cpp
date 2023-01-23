@@ -62,7 +62,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 画面クリア
 		ClearDrawScreen();
 		//---------  ここからプログラムを記述  ----------//
-
 		// 更新処理
 		if (keys[KEY_INPUT_RETURN] == 1 && prev[KEY_INPUT_RETURN] == 0)
 		{
