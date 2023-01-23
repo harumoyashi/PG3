@@ -1,5 +1,5 @@
 #include "DxLib.h"
-#include "SceneManager.h"
+#include "Enemy.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "LE2A_01_アイカワ_ハルヒコ";
@@ -11,7 +11,7 @@ const int WIN_WIDTH = 600;
 const int WIN_HEIGHT = 400;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
-                   _In_ int nCmdShow) {
+	_In_ int nCmdShow) {
 	// ウィンドウモードに設定
 	ChangeWindowMode(TRUE);
 
@@ -40,12 +40,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// 画像などのリソースデータの変数宣言と読み込み
 
 	// ゲームループで使う変数の宣言
-	SceneManager* sceneManager = SceneManager::GetInstance();
-
-	int backGroundColor = 0xffffff;
-
-	const char* nowSceneName = "";
-	const char* nextSceneName = "";
+	Enemy* enemys;
+	const int maxEnemy = 10;
+	enemys = new Enemy[maxEnemy];
 
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };
@@ -66,54 +63,28 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ClearDrawScreen();
 		//---------  ここからプログラムを記述  ----------//
 
-		int nextScene = sceneManager->GetSceneNum() + 1;
-
 		// 更新処理
-
-		if (keys[KEY_INPUT_SPACE] == 1 && prev[KEY_INPUT_SPACE] == 0)
+		if (keys[KEY_INPUT_RETURN] == 1 && prev[KEY_INPUT_RETURN] == 0)
 		{
-			sceneManager->ChangeScene(nextScene);
-		}
-
-		if (sceneManager->GetSceneNum() == SceneNum::Title)
-		{
-			backGroundColor = 0xAA5050;
-
-			nowSceneName = "TitleScene";
-			nextSceneName = "NewGameScene";
-		}
-		else if (sceneManager->GetSceneNum() == SceneNum::NewGame)
-		{
-			backGroundColor = 0x50AA50;
-
-			nowSceneName = "NewGameScene";
-			nextSceneName = "GamePlayScene";
-		}
-		else if (sceneManager->GetSceneNum() == SceneNum::GamePlay)
-		{
-			backGroundColor = 0x5050AA;
-
-			nowSceneName = "GamePlayScene";
-			nextSceneName = "GameClearScene";
-		}
-		else if (sceneManager->GetSceneNum() == SceneNum::GameClear)
-		{
-			backGroundColor = 0x505050;
-
-			nowSceneName = "GameClearScene";
-			nextSceneName = "TitleScene";
+			if (enemys->GetIsAlive())
+			{
+				enemys->SetIsAlive(false);
+			}
+			else
+			{
+				enemys->SetIsAlive(true);
+			}
 		}
 
 		// 描画処理
 
 		// 背景描画
-		DrawBox(0, 0, WIN_WIDTH, WIN_HEIGHT, backGroundColor, true);
 
 		// 文字描画
-		DrawFormatString(0, 0, 0xffffff, "NowScene  : %s", nowSceneName);
-		DrawFormatString(0, 20, 0xffffff, "NextScene : %s", nextSceneName);
-		DrawFormatString(200, 150, 0xffffff, "SceneNum : %d", sceneManager->GetSceneNum());
-		DrawFormatString(200, 200, 0xffffff, "Press SPACE");
+		for (int i = 0; i < maxEnemy; i++)
+		{
+			DrawFormatString(0, i * 20, 0xffffff, "enemy[%d]:isAlive = %d", i, enemys[i].GetIsAlive());
+		}
 
 
 		//---------  ここまでにプログラムを記述  ---------//
