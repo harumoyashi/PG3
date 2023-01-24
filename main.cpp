@@ -16,5 +16,6 @@ int main()
 		shape[i]->Draw();
 	}
 
+
 	return (0);
 }
