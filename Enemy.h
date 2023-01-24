@@ -1,7 +1,7 @@
 #pragma once
 #include "Vec2.h"
 
-enum State {
+enum Phase {
     Approach,   //Ú‹ß
     Shot,       //ËŒ‚
     GoAway      //—£’E
@@ -13,10 +13,15 @@ public:
 
 
 private:
-    static Vec2 pos;
+    Vec2 pos;
     static float radius;
 
     static bool isAlive;
+
+    int state = Phase::Approach;
+
+    const int maxPhaseTime = 60;
+    int phaseTimer = 0;
 
 public:
     Enemy();

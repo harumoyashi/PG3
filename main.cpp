@@ -43,7 +43,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Enemy* enemys;
 	const int maxEnemy = 10;
 	enemys = new Enemy[maxEnemy];
-	enemys->Init();
+	for (size_t i = 0; i < maxEnemy; i++)
+	{
+		enemys[i].Init();
+	}
 
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };
@@ -76,10 +79,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			}
 		}
 
-		enemys->Update();
+		for (size_t i = 0; i < maxEnemy; i++)
+		{
+			enemys[i].Update();
+		}
 
 		// 描画処理
-		enemys->Draw();
+		for (size_t i = 0; i < maxEnemy; i++)
+		{
+			enemys[i].Draw();
+		}
 
 		// 背景描画
 
@@ -88,6 +97,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			DrawFormatString(0, i * 20, 0xffffff, "enemy[%d]:isAlive = %d", i, enemys[i].GetIsAlive());
 		}
+
+		DrawFormatString(500, 0, 0xffffff, "赤：接近\n緑：射撃\n青：離脱");
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
