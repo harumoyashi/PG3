@@ -139,7 +139,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Content.cpp" />
+    <ClCompile Include="Deadline.cpp" />
+    <ClCompile Include="ID.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="Priority.cpp" />
+    <ClCompile Include="State.cpp" />
+    <ClCompile Include="Task.cpp" />
+    <ClCompile Include="TaskManager.cpp" />
+    <ClCompile Include="Title.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Content.h" />
+    <ClInclude Include="Deadline.h" />
+    <ClInclude Include="ID.h" />
+    <ClInclude Include="Manager.h" />
+    <ClInclude Include="Priority.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="Task.h" />
+    <ClInclude Include="TaskManager.h" />
+    <ClInclude Include="Title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
