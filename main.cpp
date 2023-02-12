@@ -106,7 +106,7 @@ int main()
 			printf("-----------------------------------------------------------------------\n");
 			printf("[タスクの追加]\n");
 
-			char title[50]{}; char content[100]{}; char priority[9]{}; int deadline{}; int id{}; int picID{};
+			char title[50]{}; char content[100]{}; string priority{}; int deadline{}; int id{}; int picID{};
 			printf("-----------------------------------------------------------------------\n");
 			while (true)
 			{
@@ -130,10 +130,45 @@ int main()
 			printf("-----------------------------------------------------------------------\n");
 			while (true)
 			{
-				printf("タスクの優先度を入力してください\n");
+				printf("-----------------------------------------------------------------------\n");
+				printf("タスクの優先度を選択してください\n");
+				printf("-----------------------------------------------------------------------\n");
 
-				scanf_s("%s", priority, 9);
-				scanf_s("%*[^\n]%*c");
+				while (true)
+				{
+					printf("============================\n");
+					printf("1.高\n2.中\n3.低\n4.保留\n");
+					printf("============================\n");
+
+					int num;
+					scanf_s("%d", &num);
+					scanf_s("%*[^\n]%*c");
+
+					if (num == 1)
+					{
+						priority = "高";
+						break;
+					}
+					else if (num == 2)
+					{
+						priority = "中";
+						break;
+					}
+					else if (num == 3)
+					{
+						priority = "低";
+						break;
+					}
+					else if (num == 4)
+					{
+						priority = "保留";
+						break;
+					}
+					else
+					{
+						printf("そんな操作ねえよ\n");
+					}
+				}
 
 				break;
 			}

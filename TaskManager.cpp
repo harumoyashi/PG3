@@ -8,7 +8,7 @@ void TaskManager::Create(const string& title, const string& content, const strin
 {
 	if (PICManager::GetData(maneID) == nullptr)
 	{
-		printf("ID「%d」の担当者が存在しません\n", id);
+		printf("担当者ID「%d」が存在しません\n", maneID);
 		return;
 	}
 
