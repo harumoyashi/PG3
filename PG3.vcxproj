@@ -143,7 +143,8 @@
     <ClCompile Include="Deadline.cpp" />
     <ClCompile Include="ID.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="PIC.cpp" />
+    <ClCompile Include="PICManager.cpp" />
     <ClCompile Include="Priority.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Task.cpp" />
@@ -154,7 +155,8 @@
     <ClInclude Include="Content.h" />
     <ClInclude Include="Deadline.h" />
     <ClInclude Include="ID.h" />
-    <ClInclude Include="Manager.h" />
+    <ClInclude Include="PIC.h" />
+    <ClInclude Include="PICManager.h" />
     <ClInclude Include="Priority.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="Task.h" />

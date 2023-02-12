@@ -1,4 +1,5 @@
 #include "Task.h"
+#include "PICManager.h"
 
 void Task::SetSteat(const string& typeName)
 {
@@ -32,7 +33,7 @@ void Task::SetPriority(const string& typeName)
 	}
 }
 
-void Task::SetManager(const int& maneID)
+void Task::SetPIC(const int& picID)
 {
-	manager = *ManagerMane::GetData(maneID);
+	pic = *PICManager::GetData(picID);
 }

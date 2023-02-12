@@ -1,6 +1,6 @@
 #pragma once
 #include "ID.h"
-#include "Manager.h"
+#include "PIC.h"
 #include "Title.h"
 #include "Content.h"
 #include "Priority.h"
@@ -11,7 +11,7 @@ class Task
 {
 public:
 	ID id;
-	Manager manager;
+	PIC pic;
 	Title title;
 	Content content;
 	Priority priority;
@@ -21,5 +21,5 @@ public:
 public:
 	void SetSteat(const string& typeName);
 	void SetPriority(const string& typeName);
-	void SetManager(const int& maneID);
+	void SetPIC(const int& maneID);
 };

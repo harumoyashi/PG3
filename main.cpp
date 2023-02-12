@@ -1,4 +1,5 @@
 #include "TaskManager.h"
+#include "PICManager.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,9 +13,9 @@ int main()
 		TaskShowAll,
 		TaskAdd,
 		TaskEdit,
-		ManagerShowAll,
-		ManagerAdd,
-		ManagerEdit,
+		PICShowAll,
+		PICAdd,
+		PICEdit,
 
 		MaxScene
 	};
@@ -23,7 +24,7 @@ int main()
 	int eleSceneNum = 0;
 	int addSceneNum = 0;
 
-	ManagerMane::Create(2301, "アイカワ_ハルヒコ", "LE2A");
+	PICManager::Create(2301, "アイカワ_ハルヒコ", "LE2A");
 
 	TaskManager::Create(
 		"タイマーのバグ",
@@ -102,7 +103,7 @@ int main()
 			printf("-----------------------------------------------------------------------\n");
 			printf("[タスクの追加]\n");
 
-			char title[50]{}; char content[100]{}; char priority[9]{}; int deadline{}; int id{}; int maneID{};
+			char title[50]{}; char content[100]{}; char priority[9]{}; int deadline{}; int id{}; int picID{};
 			printf("-----------------------------------------------------------------------\n");
 			while (true)
 			{
@@ -158,7 +159,7 @@ int main()
 			{
 				printf("タスクの担当者IDを入力してください\n");
 
-				scanf_s("%d", &maneID);
+				scanf_s("%d", &picID);
 				scanf_s("%*[^\n]%*c");
 
 				break;
@@ -167,7 +168,7 @@ int main()
 			std::string t = title;
 			std::string c = content;
 			std::string p = priority;
-			TaskManager::Create(t, c, p, deadline, id, maneID);
+			TaskManager::Create(t, c, p, deadline, id, picID);
 
 			//シーン切り替え
 			printf("-----------------------------------------------------------------------\n");
@@ -239,14 +240,14 @@ int main()
 			}
 		}
 		//担当者一覧
-		else if (sceneNum == ManagerShowAll)
+		else if (sceneNum == PICShowAll)
 		{
 			printf("-----------------------------------------------------------------------\n");
 			printf("[担当者の一覧表示]\n要素一覧:\n");
 
-			ManagerMane::ShowAll();
+			PICManager::ShowAll();
 			printf("-----------------------------------------------------------------------\n");
-			printf("登録されてる担当者数:%d人\n\n", ManagerMane::GetSize());
+			printf("登録されてる担当者数:%d人\n\n", PICManager::GetSize());
 			printf("-----------------------------------------------------------------------\n");
 
 			//シーン切り替え
@@ -256,7 +257,7 @@ int main()
 			scanf_s("%d", &num);
 			scanf_s("%*[^\n]%*c");
 			printf("-----------------------------------------------------------------------\n");
-			while (sceneNum == ManagerShowAll)
+			while (sceneNum == PICShowAll)
 			{
 				if (num == Title)
 				{
@@ -272,7 +273,7 @@ int main()
 			}
 		}
 		//担当者追加
-		else if (sceneNum == ManagerAdd)
+		else if (sceneNum == PICAdd)
 		{
 			printf("-----------------------------------------------------------------------\n");
 			printf("[担当者の追加]\n");
@@ -312,7 +313,7 @@ int main()
 			printf("-----------------------------------------------------------------------\n");
 			string n = name;
 			string c = classID;
-			ManagerMane::Create(id, n, c);
+			PICManager::Create(id, n, c);
 
 			//シーン切り替え
 			printf("-----------------------------------------------------------------------\n");
@@ -321,7 +322,7 @@ int main()
 			scanf_s("%d", &num);
 			scanf_s("%*[^\n]%*c");
 			printf("-----------------------------------------------------------------------\n");
-			while (sceneNum == ManagerAdd)
+			while (sceneNum == PICAdd)
 			{
 				if (num == Title)
 				{
@@ -337,7 +338,7 @@ int main()
 			}
 		}
 		//担当者編集
-		else if (sceneNum == ManagerEdit)
+		else if (sceneNum == PICEdit)
 		{
 			printf("-----------------------------------------------------------------------\n");
 			printf("[担当者の編集]\n");
@@ -354,7 +355,7 @@ int main()
 				break;
 			}
 			printf("-----------------------------------------------------------------------\n");
-			ManagerMane::Edit(id);
+			PICManager::Edit(id);
 
 			//シーン切り替え
 			printf("-----------------------------------------------------------------------\n");
@@ -363,7 +364,7 @@ int main()
 			scanf_s("%d", &num);
 			scanf_s("%*[^\n]%*c");
 			printf("-----------------------------------------------------------------------\n");
-			while (sceneNum == ManagerEdit)
+			while (sceneNum == PICEdit)
 			{
 				if (num == Title)
 				{
