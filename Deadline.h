@@ -6,7 +6,7 @@ private:
 	int day;
 
 public:
-	inline void Set(const int& month, const int& day) { this->month = month; this->day = day; }
+	inline void Set(const int& deadline) { this->month = deadline / 100; this->day = deadline % 100; }
 	inline int GetMonth() { return month; }
 	inline int GetDay() { return day; }
 };

@@ -1,13 +1,383 @@
 #include "TaskManager.h"
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+using namespace std;
 
 int main()
 {
-	TaskManager taskMane;
-
-	while (1)
+	enum SceneType
 	{
+		Title,
+		TaskShowAll,
+		TaskAdd,
+		TaskEdit,
+		ManagerShowAll,
+		ManagerAdd,
+		ManagerEdit,
 
-		taskMane.Create();
+		MaxScene
+	};
+	//初期化
+	int sceneNum = Title;
+	int eleSceneNum = 0;
+	int addSceneNum = 0;
+
+	ManagerMane::Create(2301, "アイカワ_ハルヒコ", "LE2A");
+
+	TaskManager::Create(
+		"タイマーのバグ",
+		"シーン遷移してる間もタイマーが進んでいてクリアタイムがずれる",
+		"高", 214, 0, 2301);
+
+	TaskManager::Create(
+		"ボスの調整",
+		"ボスの攻撃のクールタイムを1秒短くする",
+		"中", 213, 1, 2301, "完了");
+
+	//更新処理
+	while (true)
+	{
+		//初期画面
+		if (sceneNum == Title)
+		{
+			printf("============================\n");
+			printf("[タイトル画面]\n1.タスクの一覧表示\n2.タスクの追加\n3.タスクの編集\n4.担当者の一覧表示\n5.担当者の追加\n6.担当者の編集\n");
+			printf("============================\n");
+			printf("操作を選択してください\n");
+			printf("-----------------------------------------------------------------------\n");
+			//シーン切り替え
+			while (true)
+			{
+				int num;
+				scanf_s("%d", &num);
+				scanf_s("%*[^\n]%*c");
+
+				if (num >= Title + 1 && num <= MaxScene - 1)
+				{
+					sceneNum = num;
+					break;
+				}
+				else
+				{
+					printf("そんな操作ねえよ\n");
+				}
+			}
+		}
+		//タスク一覧
+		else if (sceneNum == TaskShowAll)
+		{
+			printf("-----------------------------------------------------------------------\n");
+			printf("[タスクの一覧表示]\n要素一覧:\n");
+
+			TaskManager::ShowAll();
+			printf("タスク数:%d個\n\n", (int)TaskManager::tasks.size());
+			printf("-----------------------------------------------------------------------\n");
+
+			//シーン切り替え
+			printf("-----------------------------------------------------------------------\n");
+			printf("0.初期画面に戻る\n");
+			int num;
+			scanf_s("%d", &num);
+			scanf_s("%*[^\n]%*c");
+			printf("-----------------------------------------------------------------------\n");
+			while (sceneNum == TaskShowAll)
+			{
+				if (num == Title)
+				{
+					sceneNum = Title;
+					break;
+				}
+				else
+				{
+					printf("0って言ってんだろ\n");
+					scanf_s("%d", &num);
+					scanf_s("%*[^\n]%*c");
+				}
+			}
+		}
+		//タスク追加
+		else if (sceneNum == TaskAdd)
+		{
+			printf("-----------------------------------------------------------------------\n");
+			printf("[タスクの追加]\n");
+
+			char title[50]{}; char content[100]{}; char priority[9]{}; int deadline{}; int id{}; int maneID{};
+			printf("-----------------------------------------------------------------------\n");
+			while (true)
+			{
+				printf("タスクのタイトルを入力してください\n");
+
+				scanf_s("%s", title, 50);
+				scanf_s("%*[^\n]%*c");
+
+				break;
+			}
+			printf("-----------------------------------------------------------------------\n");
+			while (true)
+			{
+				printf("タスクの内容を入力してください\n");
+
+				scanf_s("%s", content, 100);
+				scanf_s("%*[^\n]%*c");
+
+				break;
+			}
+			printf("-----------------------------------------------------------------------\n");
+			while (true)
+			{
+				printf("タスクの優先度を入力してください\n");
+
+				scanf_s("%s", priority, 9);
+				scanf_s("%*[^\n]%*c");
+
+				break;
+			}
+			printf("-----------------------------------------------------------------------\n");
+			while (true)
+			{
+				printf("タスクの期限を入力してください\n月は先頭に「0」をつけず、3桁か4桁で入力してください(例:1月1日->101)\n");
+
+				scanf_s("%d", &deadline);
+				scanf_s("%*[^\n]%*c");
+
+				break;
+			}
+			printf("-----------------------------------------------------------------------\n");
+			while (true)
+			{
+				printf("タスクのIDを入力してください\n");
+
+				scanf_s("%d", &id);
+				scanf_s("%*[^\n]%*c");
+
+				break;
+			}
+			printf("-----------------------------------------------------------------------\n");
+			while (true)
+			{
+				printf("タスクの担当者IDを入力してください\n");
+
+				scanf_s("%d", &maneID);
+				scanf_s("%*[^\n]%*c");
+
+				break;
+			}
+			printf("-----------------------------------------------------------------------\n");
+			std::string t = title;
+			std::string c = content;
+			std::string p = priority;
+			TaskManager::Create(t, c, p, deadline, id, maneID);
+
+			//シーン切り替え
+			printf("-----------------------------------------------------------------------\n");
+			printf("0.初期画面に戻る\n");
+			int num;
+			scanf_s("%d", &num);
+			scanf_s("%*[^\n]%*c");
+			printf("-----------------------------------------------------------------------\n");
+			while (sceneNum == TaskAdd)
+			{
+				if (num == Title)
+				{
+					sceneNum = Title;
+					break;
+				}
+				else
+				{
+					printf("0って言ってんだろ\n");
+					scanf_s("%d", &num);
+					scanf_s("%*[^\n]%*c");
+				}
+			}
+		}
+		//タスク編集
+		else if (sceneNum == TaskEdit)
+		{
+			printf("-----------------------------------------------------------------------\n");
+			printf("[タスクの編集]\n");
+			printf("-----------------------------------------------------------------------\n");
+
+			int id{};
+			while (true)
+			{
+				printf("編集したいタスクのIDを入力してください\n");
+
+				scanf_s("%d", &id);
+				scanf_s("%*[^\n]%*c");
+
+				break;
+			}
+			printf("-----------------------------------------------------------------------\n");
+			TaskManager::Edit(id);
+
+			//シーン切り替え
+			while (true)
+			{
+				if (sceneNum == 0)
+				{
+					printf("編集するものないから初期画面戻るよ\n");
+					break;
+				}
+				else
+				{
+					printf("---------------------\n0.初期画面に戻る\n");
+					int num;
+					scanf_s("%d", &num);
+					scanf_s("%*[^\n]%*c");
+
+					if (num == 0)
+					{
+						sceneNum = num;
+						break;
+					}
+					else
+					{
+						printf("0って言ってんだろ\n");
+					}
+				}
+			}
+		}
+		//担当者一覧
+		else if (sceneNum == ManagerShowAll)
+		{
+			printf("-----------------------------------------------------------------------\n");
+			printf("[担当者の一覧表示]\n要素一覧:\n");
+
+			ManagerMane::ShowAll();
+			printf("-----------------------------------------------------------------------\n");
+			printf("登録されてる担当者数:%d人\n\n", ManagerMane::GetSize());
+			printf("-----------------------------------------------------------------------\n");
+
+			//シーン切り替え
+			printf("-----------------------------------------------------------------------\n");
+			printf("0.初期画面に戻る\n");
+			int num;
+			scanf_s("%d", &num);
+			scanf_s("%*[^\n]%*c");
+			printf("-----------------------------------------------------------------------\n");
+			while (sceneNum == ManagerShowAll)
+			{
+				if (num == Title)
+				{
+					sceneNum = Title;
+					break;
+				}
+				else
+				{
+					printf("0って言ってんだろ\n");
+					scanf_s("%d", &num);
+					scanf_s("%*[^\n]%*c");
+				}
+			}
+		}
+		//担当者追加
+		else if (sceneNum == ManagerAdd)
+		{
+			printf("-----------------------------------------------------------------------\n");
+			printf("[担当者の追加]\n");
+			printf("-----------------------------------------------------------------------\n");
+
+			int id{}; char name[20]{}; char classID[9]{};
+
+			while (true)
+			{
+				printf("担当者のIDを入力してください\n");
+
+				scanf_s("%d", &id);
+				scanf_s("%*[^\n]%*c");
+
+				break;
+			}
+			printf("-----------------------------------------------------------------------\n");
+			while (true)
+			{
+				printf("担当者の名前を入力してください\n");
+
+				scanf_s("%s", name, 20);
+				scanf_s("%*[^\n]%*c");
+
+				break;
+			}
+			printf("-----------------------------------------------------------------------\n");
+			while (true)
+			{
+				printf("担当者のクラス記号を入力してください\n");
+
+				scanf_s("%s", classID, 9);
+				scanf_s("%*[^\n]%*c");
+
+				break;
+			}
+			printf("-----------------------------------------------------------------------\n");
+			string n = name;
+			string c = classID;
+			ManagerMane::Create(id, n, c);
+
+			//シーン切り替え
+			printf("-----------------------------------------------------------------------\n");
+			printf("0.初期画面に戻る\n");
+			int num;
+			scanf_s("%d", &num);
+			scanf_s("%*[^\n]%*c");
+			printf("-----------------------------------------------------------------------\n");
+			while (sceneNum == ManagerAdd)
+			{
+				if (num == Title)
+				{
+					sceneNum = Title;
+					break;
+				}
+				else
+				{
+					printf("0って言ってんだろ\n");
+					scanf_s("%d", &num);
+					scanf_s("%*[^\n]%*c");
+				}
+			}
+		}
+		//担当者編集
+		else if (sceneNum == ManagerEdit)
+		{
+			printf("-----------------------------------------------------------------------\n");
+			printf("[担当者の編集]\n");
+			printf("-----------------------------------------------------------------------\n");
+
+			int id{};
+			while (true)
+			{
+				printf("編集したい担当者のIDを入力してください\n");
+
+				scanf_s("%d", &id);
+				scanf_s("%*[^\n]%*c");
+
+				break;
+			}
+			printf("-----------------------------------------------------------------------\n");
+			ManagerMane::Edit(id);
+
+			//シーン切り替え
+			printf("-----------------------------------------------------------------------\n");
+			printf("0.初期画面に戻る\n");
+			int num;
+			scanf_s("%d", &num);
+			scanf_s("%*[^\n]%*c");
+			printf("-----------------------------------------------------------------------\n");
+			while (sceneNum == ManagerEdit)
+			{
+				if (num == Title)
+				{
+					sceneNum = Title;
+					break;
+				}
+				else
+				{
+					printf("0って言ってんだろ\n");
+					scanf_s("%d", &num);
+					scanf_s("%*[^\n]%*c");
+				}
+			}
+		}
 	}
 
 	return (0);

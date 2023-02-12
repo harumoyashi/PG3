@@ -18,21 +18,28 @@ public:
 	void SetID(const int& num) { id.Set(num); }
 	void SetName(const string& name) { this->name = name; }
 	void SetClassID(const string& classID) { this->classID = classID; }
+
+	int GetID() { return id.Get(); }
+	string GetName() { return name; }
+	string GetClassID() { return classID; }
 };
 
 class ManagerMane
 {
 private:
-	list<std::unique_ptr<Manager>> managers;
+	static list<unique_ptr<Manager>> managers;
 
 public:
 	//新しく作成
-	void Create();
-	//指定した要素番号の要素を削除
-	//elementNum:要素番号
-	void Delete(const int& elementNum);
+	static void Create(const int& idNum, const string& name, const string& classID);
+	//指定したID番号の要素を削除
+	//id:ID番号
+	static void Delete(const int& id);
+	//指定したID番号の要素を編集
+	//id:ID番号
+	static void Edit(const int& id);
 
-	void SetID(const int& elementNum, const int& idNum);
-	void SetName(const int& elementNum, const string& name);
-	void SetClassID(const int& elementNum, const string& classID);
+	static Manager* GetData(const int& id);
+	static void ShowAll();
+	static int GetSize() { return (int)managers.size(); }
 };

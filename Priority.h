@@ -1,6 +1,7 @@
 #pragma once
 class Priority
 {
+public:
 	enum class PriorityType
 	{
 		Top,		//çÇ

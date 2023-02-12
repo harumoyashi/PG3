@@ -9,7 +9,7 @@
 
 class Task
 {
-private:
+public:
 	ID id;
 	Manager manager;
 	Title title;
@@ -20,4 +20,6 @@ private:
 
 public:
 	void SetSteat(const string& typeName);
+	void SetPriority(const string& typeName);
+	void SetManager(const int& maneID);
 };
