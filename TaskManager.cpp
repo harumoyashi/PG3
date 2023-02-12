@@ -180,6 +180,12 @@ void TaskManager::Edit(const int& id)
 				scanf_s("%d", &taskID);
 				scanf_s("%*[^\n]%*c");
 
+				if (TaskManager::GetData(id) != nullptr)
+				{
+					printf("同じIDのタスクがすでにあるので変更できません\n");
+					break;
+				}
+
 				TaskManager::GetData(id)->id.Set(taskID);
 				break;
 			}
@@ -191,6 +197,12 @@ void TaskManager::Edit(const int& id)
 				printf("-----------------------------------------------------------------------\n");
 				scanf_s("%d", &maneID);
 				scanf_s("%*[^\n]%*c");
+
+				if (PICManager::GetData(maneID) == nullptr)
+				{
+					printf("担当者ID「%d」が存在しません\n", maneID);
+					break;
+				}
 
 				TaskManager::GetData(id)->SetPIC(maneID);
 				break;
