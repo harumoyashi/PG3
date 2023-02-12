@@ -10,17 +10,20 @@ void PICManager::Create(const int& idNum, const string& name, const string& clas
 	pic->SetClassID(classID);
 
 	pics.emplace_back(move(pic));
-	printf("以下の情報が追加されました\nID:%d,担当者名:%s,クラス記号:%s\n", idNum, name.c_str(), classID.c_str());
+	printf("以下の情報で担当者が追加されました\nID:%d,担当者名:%s,クラス記号:%s\n", idNum, name.c_str(), classID.c_str());
 }
 
 void PICManager::Delete(const int& id)
 {
-	for (auto itr = pics.begin(); itr != pics.end(); itr++)
+	for (auto itr = pics.begin(); itr != pics.end();)
 	{
 		if (itr->get()->GetID() == id)
 		{
-			pics.erase(itr);
-			printf("%dを削除しました\n", id);
+			itr = pics.erase(itr);
+		}
+		// 要素削除をしない場合に、イテレータを進める
+		else {
+			++itr;
 		}
 	}
 }
@@ -35,7 +38,7 @@ void PICManager::Edit(const int& id)
 			while (true)
 			{
 				printf("============================\n");
-				printf("[編集項目の選択]\n0.編集をやめる\n1.IDを編集\n2.担当者名を編集\n3.クラス記号を編集\n");
+				printf("[編集項目の選択]\n0.編集をやめる\n1.IDを編集\n2.担当者名を編集\n3.クラス記号を編集\n4.担当者の削除\n");
 				printf("============================\n");
 				printf("操作を選択してください\n");
 				printf("-----------------------------------------------------------------------\n");
@@ -48,7 +51,7 @@ void PICManager::Edit(const int& id)
 					printf("編集を終わります\n");
 					return;
 				}
-				if (editScene >= 0 && editScene <= 7)
+				if (editScene >= 0 && editScene <= 4)
 				{
 					break;
 				}
@@ -58,58 +61,90 @@ void PICManager::Edit(const int& id)
 				}
 			}
 
-			for (auto itr = pics.begin(); itr != pics.end(); itr++)
+			int idNum{}; char name[20]{}; char classID[9]{};
+			while (editScene == 1)
 			{
-				int idNum{}; char name[20]{}; char classID[9]{};
-				while (editScene == 1)
+				printf("-----------------------------------------------------------------------\n");
+				printf("担当者のIDを入力してください\n");
+				printf("変更しない場合は「0」を入力してください\n");
+				printf("-----------------------------------------------------------------------\n");
+				scanf_s("%d", &idNum);
+				scanf_s("%*[^\n]%*c");
+
+				if (idNum != 0)
 				{
-					printf("-----------------------------------------------------------------------\n");
-					printf("担当者のIDを入力してください\n");
-					printf("変更しない場合は「0」を入力してください\n");
-					printf("-----------------------------------------------------------------------\n");
-					scanf_s("%d", &idNum);
+					PICManager::GetData(id)->SetID(idNum);
+				}
+				break;
+			}
+
+			while (editScene == 2)
+			{
+				printf("-----------------------------------------------------------------------\n");
+				printf("担当者の名前を入力してください\n");
+				printf("変更しない場合は「0」を入力してください\n");
+				printf("-----------------------------------------------------------------------\n");
+
+				scanf_s("%s", name, 20);
+				scanf_s("%*[^\n]%*c");
+
+				if (name != 0)
+				{
+					PICManager::GetData(id)->SetName(name);
+				}
+				break;
+			}
+
+			while (editScene == 3)
+			{
+				printf("-----------------------------------------------------------------------\n");
+				printf("担当者のクラス記号を入力してください\n");
+				printf("変更しない場合は「0」を入力してください\n");
+				printf("-----------------------------------------------------------------------\n");
+
+				scanf_s("%s", classID, 9);
+				scanf_s("%*[^\n]%*c");
+
+				if (classID != 0)
+				{
+					PICManager::GetData(id)->SetClassID(classID);
+				}
+				break;
+			}
+
+			while (editScene == 4)
+			{
+				printf("-----------------------------------------------------------------------\n");
+				printf("ID:%d\n", PICManager::GetData(id)->GetID());
+				printf("担当者名:%s\n", PICManager::GetData(id)->GetName().c_str());
+				printf("クラスID:%s\n\n", PICManager::GetData(id)->GetClassID().c_str());
+				printf("-----------------------------------------------------------------------\n");
+
+				while (true)
+				{
+					printf("上記のタスクを削除しますがよろしいですか？\n");
+					printf("0.はい\n1.いいえ\n");
+					int num;
+					scanf_s("%d", &num);
 					scanf_s("%*[^\n]%*c");
 
-					if (idNum != 0)
+					if (num == 0)
 					{
-						itr->get()->SetID(idNum);
+						Delete(id);
+						printf("削除しました\n");
+						return;
 					}
-					break;
-				}
-
-				while (editScene == 2)
-				{
-					printf("-----------------------------------------------------------------------\n");
-					printf("担当者の名前を入力してください\n");
-					printf("変更しない場合は「0」を入力してください\n");
-					printf("-----------------------------------------------------------------------\n");
-
-					scanf_s("%s", name, 20);
-					scanf_s("%*[^\n]%*c");
-
-					if (name != 0)
+					else if (num == 1)
 					{
-						itr->get()->SetName(name);
+						printf("削除を取り消しました\n");
+						break;
 					}
-					break;
-				}
-
-				while (editScene == 3)
-				{
-					printf("-----------------------------------------------------------------------\n");
-					printf("担当者のクラス記号を入力してください\n");
-					printf("変更しない場合は「0」を入力してください\n");
-					printf("-----------------------------------------------------------------------\n");
-
-					scanf_s("%s", classID, 9);
-					scanf_s("%*[^\n]%*c");
-
-					if (classID != 0)
+					else
 					{
-						itr->get()->SetClassID(classID);
+						printf("0か1で選択しろや\n");
 					}
-					break;
 				}
+				break;
 			}
 		}
 	}

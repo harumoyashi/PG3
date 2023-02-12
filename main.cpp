@@ -24,17 +24,17 @@ int main()
 	int eleSceneNum = 0;
 	int addSceneNum = 0;
 
-	PICManager::Create(2301, "アイカワ_ハルヒコ", "LE2A");
+	PICManager::Create(0, "アイカワ_ハルヒコ", "LE2A");
 
 	TaskManager::Create(
 		"タイマーのバグ",
 		"シーン遷移してる間もタイマーが進んでいてクリアタイムがずれる",
-		"高", 214, 0, 2301);
+		"高", 214, 0, 0);
 
 	TaskManager::Create(
 		"ボスの調整",
 		"ボスの攻撃のクールタイムを1秒短くする",
-		"中", 213, 1, 2301, "完了");
+		"中", 213, 1, 0, "完了");
 
 	//更新処理
 	while (true)
@@ -69,7 +69,7 @@ int main()
 		else if (sceneNum == TaskShowAll)
 		{
 			printf("-----------------------------------------------------------------------\n");
-			printf("[タスクの一覧表示]\n要素一覧:\n");
+			printf("[タスクの一覧表示]\n");
 
 			TaskManager::ShowAll();
 			printf("タスク数:%d個\n\n", (int)TaskManager::tasks.size());
@@ -243,7 +243,7 @@ int main()
 		else if (sceneNum == PICShowAll)
 		{
 			printf("-----------------------------------------------------------------------\n");
-			printf("[担当者の一覧表示]\n要素一覧:\n");
+			printf("[担当者の一覧表示]\n");
 
 			PICManager::ShowAll();
 			printf("-----------------------------------------------------------------------\n");

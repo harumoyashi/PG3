@@ -28,14 +28,21 @@ void TaskManager::Create(const string& title, const string& content, const strin
 	task->SetSteat(state);
 
 	tasks.emplace_back(std::move(task));
-	printf("新たにタスクを追加しました\n");
+	printf("新たに「%s」を追加しました\n", title.c_str());
 }
 
-void TaskManager::Delete(const int& elementNum)
+void TaskManager::Delete(const int& id)
 {
-	for (auto itr = tasks.begin(); itr != tasks.end(); itr++)
+	for (auto itr = tasks.begin(); itr != tasks.end();)
 	{
-		tasks.erase(itr);
+		if (itr->get()->id.Get() == id)
+		{
+			itr = tasks.erase(itr);
+		}
+		// 要素削除をしない場合に、イテレータを進める
+		else {
+			++itr;
+		}
 	}
 }
 
@@ -50,7 +57,7 @@ void TaskManager::Edit(const int& id)
 			while (true)
 			{
 				printf("============================\n");
-				printf("[編集項目の選択]\n0.編集をやめる\n1.タイトルを編集\n2.内容を編集\n3.優先度を編集\n4.期限を編集\n5.タスクIDを編集\n6.担当者IDを編集\n7.ステータスを編集\n");
+				printf("[編集項目の選択]\n0.編集をやめる\n1.タイトルを編集\n2.内容を編集\n3.優先度を編集\n4.期限を編集\n5.タスクIDを編集\n6.担当者IDを編集\n7.ステータスを編集\n8.タスクの削除\n");
 				printf("============================\n");
 				printf("操作を選択してください\n");
 				printf("-----------------------------------------------------------------------\n");
@@ -63,7 +70,7 @@ void TaskManager::Edit(const int& id)
 					printf("編集を終わります\n");
 					return;
 				}
-				if (editScene >= 0 && editScene <= 7)
+				if (editScene >= 0 && editScene <= 8)
 				{
 					break;
 				}
@@ -213,6 +220,70 @@ void TaskManager::Edit(const int& id)
 				scanf_s("%*[^\n]%*c");
 
 				TaskManager::GetData(id)->SetSteat(state);
+				break;
+			}
+
+			while (editScene == 8)
+			{
+				printf("-----------------------------------------------------------------------\n");
+				printf("ID:%d\n", TaskManager::GetData(id)->id.Get());
+				printf("担当者名:%s\n", PICManager::GetData(TaskManager::GetData(id)->pic.GetID())->GetName().c_str());
+				printf("題名:%s\n", TaskManager::GetData(id)->title.Get().c_str());
+				printf("内容:%s\n", TaskManager::GetData(id)->content.Get().c_str());
+
+				if (TaskManager::GetData(id)->priority.Get() == (int)Priority::PriorityType::Top)
+				{
+					printf("優先度:高\n");
+				}
+				else if (TaskManager::GetData(id)->priority.Get() == (int)Priority::PriorityType::Middle)
+				{
+					printf("優先度:中\n");
+				}
+				else if (TaskManager::GetData(id)->priority.Get() == (int)Priority::PriorityType::Low)
+				{
+					printf("優先度:低\n");
+				}
+				else if (TaskManager::GetData(id)->priority.Get() == (int)Priority::PriorityType::OnHold)
+				{
+					printf("優先度:保留\n");
+				}
+
+				printf("期日:%d月%d日\n", TaskManager::GetData(id)->deadline.GetMonth(), TaskManager::GetData(id)->deadline.GetDay());
+
+				if (TaskManager::GetData(id)->state.Get() == (int)State::StateType::Completion)
+				{
+					printf("ステータス:完了\n\n");
+				}
+				else if (TaskManager::GetData(id)->state.Get() == (int)State::StateType::Incomplete)
+				{
+					printf("ステータス:未完了\n\n");
+				}
+				printf("-----------------------------------------------------------------------\n");
+
+				while (true)
+				{
+					printf("上記のタスクを削除しますがよろしいですか？\n");
+					printf("0.はい\n1.いいえ\n");
+					int num;
+					scanf_s("%d", &num);
+					scanf_s("%*[^\n]%*c");
+
+					if (num == 0)
+					{
+						Delete(id);
+						printf("削除しました\n");
+						return;
+					}
+					else if (num == 1)
+					{
+						printf("削除を取り消しました\n");
+						break;
+					}
+					else
+					{
+						printf("0か1で選択しろや\n");
+					}
+				}
 				break;
 			}
 		}
