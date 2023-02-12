@@ -66,15 +66,17 @@ void PICManager::Edit(const int& id)
 			{
 				printf("-----------------------------------------------------------------------\n");
 				printf("担当者のIDを入力してください\n");
-				printf("変更しない場合は「0」を入力してください\n");
 				printf("-----------------------------------------------------------------------\n");
 				scanf_s("%d", &idNum);
 				scanf_s("%*[^\n]%*c");
 
-				if (idNum != 0)
+				if (PICManager::GetData(idNum) != nullptr)
 				{
-					PICManager::GetData(id)->SetID(idNum);
+					printf("担当者ID「%d」は既に存在するため変更できません\n", idNum);
+					break;
 				}
+
+				PICManager::GetData(id)->SetID(idNum);
 				break;
 			}
 
@@ -82,16 +84,12 @@ void PICManager::Edit(const int& id)
 			{
 				printf("-----------------------------------------------------------------------\n");
 				printf("担当者の名前を入力してください\n");
-				printf("変更しない場合は「0」を入力してください\n");
 				printf("-----------------------------------------------------------------------\n");
 
 				scanf_s("%s", name, 20);
 				scanf_s("%*[^\n]%*c");
 
-				if (name != 0)
-				{
-					PICManager::GetData(id)->SetName(name);
-				}
+				PICManager::GetData(id)->SetName(name);
 				break;
 			}
 
@@ -99,16 +97,12 @@ void PICManager::Edit(const int& id)
 			{
 				printf("-----------------------------------------------------------------------\n");
 				printf("担当者のクラス記号を入力してください\n");
-				printf("変更しない場合は「0」を入力してください\n");
 				printf("-----------------------------------------------------------------------\n");
 
 				scanf_s("%s", classID, 9);
 				scanf_s("%*[^\n]%*c");
 
-				if (classID != 0)
-				{
-					PICManager::GetData(id)->SetClassID(classID);
-				}
+				PICManager::GetData(id)->SetClassID(classID);
 				break;
 			}
 
