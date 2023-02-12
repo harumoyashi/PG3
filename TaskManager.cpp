@@ -86,16 +86,12 @@ void TaskManager::Edit(const int& id)
 			{
 				printf("-----------------------------------------------------------------------\n");
 				printf("タスクのタイトルを入力してください\n");
-				printf("変更しない場合は「0」を入力してください\n");
 				printf("-----------------------------------------------------------------------\n");
 				scanf_s("%s", title, 50);
 				scanf_s("%*[^\n]%*c");
 
-				if (title != "0")
-				{
-					string t = title;
-					TaskManager::GetData(id)->title.Set(t);
-				}
+				string t = title;
+				TaskManager::GetData(id)->title.Set(t);
 				break;
 			}
 
@@ -103,16 +99,12 @@ void TaskManager::Edit(const int& id)
 			{
 				printf("-----------------------------------------------------------------------\n");
 				printf("タスクの内容を入力してください\n");
-				printf("変更しない場合は「0」を入力してください\n");
 				printf("-----------------------------------------------------------------------\n");
 				scanf_s("%s", content, 100);
 				scanf_s("%*[^\n]%*c");
 
-				if (content[0] != '0')
-				{
-					string c = content;
-					TaskManager::GetData(id)->content.Set(c);
-				}
+				string c = content;
+				TaskManager::GetData(id)->content.Set(c);
 				break;
 			}
 
@@ -165,31 +157,30 @@ void TaskManager::Edit(const int& id)
 			{
 				printf("-----------------------------------------------------------------------\n");
 				printf("タスクの期限を入力してください\n");
-				printf("変更しない場合は「0」を入力してください\n");
 				printf("-----------------------------------------------------------------------\n");
 				scanf_s("%d", &deadline);
 				scanf_s("%*[^\n]%*c");
 
-				if (deadline != 0)
+				if (deadline / 100 >= 1 && deadline / 100 <= 12)
 				{
-					TaskManager::GetData(id)->deadline.Set(deadline);
+					if (deadline % 100 >= 1 && deadline % 100 <= 31)
+					{
+						TaskManager::GetData(id)->deadline.Set(deadline);
+						break;
+					}
 				}
-				break;
+				printf("入力の仕方読めや\n");
 			}
 
 			while (editScene == 5)
 			{
 				printf("-----------------------------------------------------------------------\n");
 				printf("タスクのIDを入力してください\n");
-				printf("変更しない場合は「0」を入力してください\n");
 				printf("-----------------------------------------------------------------------\n");
 				scanf_s("%d", &taskID);
 				scanf_s("%*[^\n]%*c");
 
-				if (taskID != 0)
-				{
-					TaskManager::GetData(id)->id.Set(taskID);
-				}
+				TaskManager::GetData(id)->id.Set(taskID);
 				break;
 			}
 
@@ -197,15 +188,11 @@ void TaskManager::Edit(const int& id)
 			{
 				printf("-----------------------------------------------------------------------\n");
 				printf("担当者のIDを入力してください\n");
-				printf("変更しない場合は「0」を入力してください\n");
 				printf("-----------------------------------------------------------------------\n");
 				scanf_s("%d", &maneID);
 				scanf_s("%*[^\n]%*c");
 
-				if (maneID != 0)
-				{
-					TaskManager::GetData(id)->SetPIC(maneID);
-				}
+				TaskManager::GetData(id)->SetPIC(maneID);
 				break;
 			}
 
@@ -213,7 +200,6 @@ void TaskManager::Edit(const int& id)
 			{
 				printf("-----------------------------------------------------------------------\n");
 				printf("ステータスを入力してください\n");
-				printf("変更しない場合は「0」を入力してください\n");
 				printf("-----------------------------------------------------------------------\n");
 
 				scanf_s("%s", state, 9);
