@@ -139,17 +139,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Content.cpp" />
-    <ClCompile Include="Deadline.cpp" />
-    <ClCompile Include="ID.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="PIC.cpp" />
     <ClCompile Include="PICManager.cpp" />
-    <ClCompile Include="Priority.cpp" />
-    <ClCompile Include="State.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="TaskManager.cpp" />
-    <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Content.h" />
