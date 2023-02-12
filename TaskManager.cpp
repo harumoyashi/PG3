@@ -28,7 +28,7 @@ void TaskManager::Create(const string& title, const string& content, const strin
 	task->SetSteat(state);
 
 	tasks.emplace_back(std::move(task));
-	printf("新たに「%s」を追加しました\n", title.c_str());
+	printf("新たにタスク「%s」を追加しました\n", title.c_str());
 }
 
 void TaskManager::Delete(const int& id)
